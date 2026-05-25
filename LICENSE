@@ -1,0 +1,5 @@
+#### `LICENSE` (Business Source License – you can use the standard text, or keep it simple with Apache 2.0 for now. I recommend BSL to protect commercial use. I'll provide a minimal BSL notice.)
+
+For simplicity, start with **Apache 2.0** (you can change later). But if you want BSL, use the official text from [BSL 1.1](https://mariadb.com/bsl11/). Let me know which.
+
+Given your concern about copying, I'd suggest **BSL**. But it's heavier. For now, I'll assume **Apache 2.0** – you can always relicense later.
