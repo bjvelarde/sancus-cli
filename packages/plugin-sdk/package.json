@@ -1,0 +1,53 @@
+{
+  "name": "@sancus/plugin-sdk",
+  "version": "1.0.0",
+  "description": "Official SDK for creating Sancus security plugins",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "vitest.config.ts"
+  ],
+  "keywords": [
+    "sancus",
+    "security",
+    "plugin",
+    "sdk",
+    "extensibility",
+    "code-scanner"
+  ],
+  "author": "Sancus Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sancus-project/sancus-cli"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitest/ui": "^1.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
