@@ -1,0 +1,31 @@
+{
+  "name": "@sancus/plugin-custom-report",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Demonstrates plugin aggregation and reporting. Detects hardcoded environment variables and generates custom reports.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "sancus",
+    "plugin",
+    "reporting",
+    "aggregation"
+  ],
+  "author": "Sancus Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@sancus/plugin-sdk": "file:../../packages/plugin-sdk",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

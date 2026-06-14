@@ -1,0 +1,30 @@
+{
+  "name": "@sancus/plugin-hello-world",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Minimal example plugin that detects console.log() statements",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "sancus",
+    "plugin",
+    "example"
+  ],
+  "author": "Sancus Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@sancus/plugin-sdk": "file:../../packages/plugin-sdk",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

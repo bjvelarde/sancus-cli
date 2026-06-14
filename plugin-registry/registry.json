@@ -1,0 +1,101 @@
+{
+  "hello-world": {
+    "id": "hello-world",
+    "name": "Hello World Plugin",
+    "version": "1.0.0",
+    "description": "Minimal example plugin that detects console.log() statements",
+    "author": "Sancus Team",
+    "repository": "https://github.com/sancus-project/sancus-cli/tree/main/examples/hello-world-plugin",
+    "license": "MIT",
+    "keywords": ["example", "beginner", "logging"],
+    "category": "utilities",
+    "tags": ["example", "typescript", "javascript"],
+    "npmPackage": {
+      "name": "@sancus/plugin-hello-world",
+      "minVersion": "1.0.0",
+      "url": "https://www.npmjs.com/package/@sancus/plugin-hello-world"
+    },
+    "metadata": {
+      "verified": true,
+      "featured": true,
+      "downloads": 250,
+      "rating": 4.9,
+      "lastUpdated": "2026-06-13T00:00:00Z"
+    },
+    "documentation": {
+      "url": "https://github.com/sancus-project/sancus-cli/tree/main/examples/hello-world-plugin",
+      "readme": "https://raw.githubusercontent.com/sancus-project/sancus-cli/main/examples/hello-world-plugin/README.md"
+    },
+    "requirements": {
+      "minNodeVersion": "18.0.0",
+      "sdkVersion": "^1.0.0",
+      "dependencies": []
+    }
+  },
+  "custom-report": {
+    "id": "custom-report",
+    "name": "Custom Report Plugin",
+    "version": "1.0.0",
+    "description": "Demonstrates plugin aggregation and reporting. Detects hardcoded environment variables and generates custom reports.",
+    "author": "Sancus Team",
+    "repository": "https://github.com/sancus-project/sancus-cli/tree/main/examples/custom-report-plugin",
+    "license": "MIT",
+    "keywords": ["reporting", "aggregation", "custom-report"],
+    "category": "reporting",
+    "tags": ["example", "typescript", "javascript", "reporting"],
+    "npmPackage": {
+      "name": "@sancus/plugin-custom-report",
+      "minVersion": "1.0.0",
+      "url": "https://www.npmjs.com/package/@sancus/plugin-custom-report"
+    },
+    "metadata": {
+      "verified": true,
+      "featured": true,
+      "downloads": 180,
+      "rating": 4.7,
+      "lastUpdated": "2026-06-13T00:00:00Z"
+    },
+    "documentation": {
+      "url": "https://github.com/sancus-project/sancus-cli/tree/main/examples/custom-report-plugin",
+      "readme": "https://raw.githubusercontent.com/sancus-project/sancus-cli/main/examples/custom-report-plugin/README.md"
+    },
+    "requirements": {
+      "minNodeVersion": "18.0.0",
+      "sdkVersion": "^1.0.0",
+      "dependencies": []
+    }
+  },
+  "framework-detector": {
+    "id": "framework-detector",
+    "name": "Framework Detector Plugin",
+    "version": "1.0.0",
+    "description": "Demonstrates framework detection and conditional scanning. Detects Next.js projects and scans for unsafe Server Action patterns.",
+    "author": "Sancus Team",
+    "repository": "https://github.com/sancus-project/sancus-cli/tree/main/examples/framework-detector-plugin",
+    "license": "MIT",
+    "keywords": ["framework", "detection", "nextjs"],
+    "category": "framework",
+    "tags": ["example", "typescript", "nextjs", "framework-detection"],
+    "npmPackage": {
+      "name": "@sancus/plugin-framework-detector",
+      "minVersion": "1.0.0",
+      "url": "https://www.npmjs.com/package/@sancus/plugin-framework-detector"
+    },
+    "metadata": {
+      "verified": true,
+      "featured": true,
+      "downloads": 320,
+      "rating": 4.8,
+      "lastUpdated": "2026-06-13T00:00:00Z"
+    },
+    "documentation": {
+      "url": "https://github.com/sancus-project/sancus-cli/tree/main/examples/framework-detector-plugin",
+      "readme": "https://raw.githubusercontent.com/sancus-project/sancus-cli/main/examples/framework-detector-plugin/README.md"
+    },
+    "requirements": {
+      "minNodeVersion": "18.0.0",
+      "sdkVersion": "^1.0.0",
+      "dependencies": []
+    }
+  }
+}

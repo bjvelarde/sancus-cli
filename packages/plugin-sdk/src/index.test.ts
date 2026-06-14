@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import * as sdk from "./index";
+import * as sdk from "./index.js";
 
 describe("Public API Exports", () => {
   it("should export all type definitions", () => {

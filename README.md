@@ -29,10 +29,33 @@ Sancus detects hardcoded secrets, SQL injection, N+1 queries, prototype pollutio
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Plugin Marketplace](#plugin-marketplace) – discover and install community plugins
 - [Plugins](#plugins) – extend Sancus for your stack
 - [License](#license)
 
-## Source availability
+---
+
+## Plugin Marketplace
+
+Install security plugins from the community marketplace:
+
+```bash
+# Search for plugins
+sancus plugin search react
+
+# Install a plugin
+sancus plugin install react-security
+
+# Run scans (plugins auto-load)
+sancus scan .
+
+# Check for updates
+sancus plugin update
+```
+
+**Learn more:** [PLUGIN_INSTALLATION_GUIDE.md](PLUGIN_INSTALLATION_GUIDE.md)
+
+---
 
 Sancus is **source‑available** under the Business Source License (BSL). The core engine is closed source during early development. The **plugin API is fully open** – you can write and share your own detectors.
 

@@ -10,7 +10,7 @@ import {
   Logger,
   FileSystemUtils,
   ScannedFile,
-} from "./types";
+} from "./types.js";
 
 describe("Types", () => {
   describe("PluginMetadata", () => {
@@ -188,7 +188,7 @@ describe("Types", () => {
         async detect() {
           return [];
         },
-        async postScan(findings) {
+        async postScan(findings: Finding[]) {
           return findings;
         },
       };

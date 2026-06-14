@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sancus Plugin Registry Schema",
+  "description": "Validates plugin entries in the Sancus marketplace registry",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "version",
+      "description",
+      "author",
+      "npmPackage"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Unique plugin identifier",
+        "pattern": "^[a-z0-9-]+$",
+        "minLength": 3,
+        "maxLength": 50
+      },
+      "name": {
+        "type": "string",
+        "description": "Human-readable plugin name",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "version": {
+        "type": "string",
+        "description": "Semantic version of the plugin",
+        "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+      },
+      "description": {
+        "type": "string",
+        "description": "What the plugin detects or does",
+        "minLength": 10,
+        "maxLength": 500
+      },
+      "author": {
+        "type": "string",
+        "description": "Plugin author or maintainer",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "repository": {
+        "type": "string",
+        "description": "Source code repository URL",
+        "format": "uri"
+      },
+      "license": {
+        "type": "string",
+        "description": "Software license type (MIT, Apache-2.0, etc.)",
+        "enum": [
+          "MIT",
+          "Apache-2.0",
+          "GPL-3.0",
+          "BSD-3-Clause",
+          "ISC",
+          "UNLICENSED"
+        ]
+      },
+      "keywords": {
+        "type": "array",
+        "description": "Searchable keywords",
+        "items": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "maxItems": 10
+      },
+      "category": {
+        "type": "string",
+        "description": "Plugin category",
+        "enum": [
+          "framework",
+          "rules",
+          "reporting",
+          "utilities",
+          "language",
+          "integration"
+        ]
+      },
+      "tags": {
+        "type": "array",
+        "description": "Framework and issue type tags",
+        "items": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "maxItems": 20
+      },
+      "npmPackage": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Full npm package name",
+            "minLength": 1
+          },
+          "minVersion": {
+            "type": "string",
+            "description": "Minimum recommended version"
+          },
+          "url": {
+            "type": "string",
+            "description": "npm package URL",
+            "format": "uri"
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "description": "Community and usage metadata",
+        "properties": {
+          "verified": {
+            "type": "boolean",
+            "description": "Official Sancus plugin"
+          },
+          "featured": {
+            "type": "boolean",
+            "description": "Featured in marketplace"
+          },
+          "downloads": {
+            "type": "integer",
+            "description": "Monthly downloads",
+            "minimum": 0
+          },
+          "rating": {
+            "type": "number",
+            "description": "Community rating (0-5)",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "lastUpdated": {
+            "type": "string",
+            "description": "Last update timestamp",
+            "format": "date-time"
+          }
+        }
+      },
+      "documentation": {
+        "type": "object",
+        "description": "Documentation links",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Main documentation URL",
+            "format": "uri"
+          },
+          "readme": {
+            "type": "string",
+            "description": "Raw README URL",
+            "format": "uri"
+          },
+          "changelog": {
+            "type": "string",
+            "description": "Changelog URL",
+            "format": "uri"
+          }
+        }
+      },
+      "requirements": {
+        "type": "object",
+        "description": "Plugin requirements",
+        "properties": {
+          "minNodeVersion": {
+            "type": "string",
+            "description": "Minimum Node.js version"
+          },
+          "sdkVersion": {
+            "type": "string",
+            "description": "Compatible SDK version (semver range)"
+          },
+          "dependencies": {
+            "type": "array",
+            "description": "Required plugins",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

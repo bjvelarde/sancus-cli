@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createFileSystemUtils } from "../utils/file-system";
+import { createFileSystemUtils } from "../utils/file-system.js";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { fileURLToPath } from "url";
