@@ -168,18 +168,20 @@ export interface FileSystemUtils {
 }
 
 /**
- * Configuration object passed to plugins during initialization
+ * Configuration object passed to plugins during initialization.
+ * projectRoot is always provided by the engine.
  */
 export interface PluginConfig {
+  /**
+   * Root directory of the project being scanned.
+   * Always set by the engine — plugins may rely on this being present.
+   */
+  projectRoot: string;
+
   /**
    * Custom configuration for this plugin (loaded from sancus.config.js or .sancusrc)
    */
   options?: Record<string, unknown>;
-
-  /**
-   * Root directory of the project being scanned
-   */
-  projectRoot?: string;
 }
 
 /**
