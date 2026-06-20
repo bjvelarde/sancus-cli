@@ -15,7 +15,12 @@ export type Confidence = "high" | "medium" | "low";
 
 /**
  * A security finding produced by a plugin.
- * This is the SDK-facing type — engine enriches it internally.
+ *
+ * This is the minimal public contract — only fields a third-party plugin
+ * author needs to populate.  The engine enriches findings internally after
+ * detect() returns (adding tool attribution, workspace, CVSS, etc.).
+ *
+ * Engine-internal enrichment lives on CoreFinding in sancus-core.
  */
 export interface Finding {
   // ── Core identification ─────────────────────────────────────────────────
@@ -57,32 +62,21 @@ export interface Finding {
   // ── Location ─────────────────────────────────────────────────────────────
 
   /**
-   * Source location in "path:line:col" or "path:line" format.
+   * Source location string (e.g. "src/app.ts:42" or "src/app.ts:42:8").
+   * The engine may derive this from ScannedFile.path if omitted.
    */
   location?: string;
 
-  /**
-   * Line range (e.g. "10" or "10-15").
-   */
+  /** Line range (e.g. "10" or "10-15") */
   lineRange?: string;
 
-  /**
-   * Relevant source code snippet for display in reports.
-   */
+  /** Relevant source code snippet for display in reports */
   codeSnippet?: string;
 
   // ── Categorization ───────────────────────────────────────────────────────
 
   /** Security category label (e.g. "Security", "Performance") */
   category?: string;
-  /** Monorepo workspace this finding belongs to (if applicable) */
-  workspace?: string;
-
-  /** CVSS score (0.0–10.0) */
-  cvssScore?: number;
-
-  /** Extension bag for plugin-specific or engine-internal data */
-  metadata?: Record<string, unknown>;
 
   /** CVE identifier if applicable */
   cve?: string | null;
@@ -90,23 +84,6 @@ export interface Finding {
   /** Related references (URLs) */
   references?: string[];
 
-  // ── Developer guidance ───────────────────────────────────────────────────
-
-  /** Unique finding instance ID (engine may assign; plugins may hint) */
-  id?: string;
-
-  /** Estimated developer time to fix (e.g. "10min", "2h") */
-  estimatedFixTime?: string;
-
-  /** Whether applying the fix breaks backward compatibility */
-  backwardsCompatible?: boolean;
-
-  /** Human-readable migration guidance */
-  migrationNote?: string;
-
-  /** Associated test file path, if this finding has a test */
-  testFile?: string | null;
-
-  /** Versions where this issue was patched (for dependency findings) */
-  patchedVersions?: string | string[];
+  /** Extension bag for plugin-specific data */
+  metadata?: Record<string, unknown>;
 }
