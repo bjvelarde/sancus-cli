@@ -52,14 +52,14 @@ export interface Finding {
   severity: Severity;
 
   /** Confidence level */
-  confidence: Confidence;
+  confidence?: Confidence;
 
   // ── Location ─────────────────────────────────────────────────────────────
 
   /**
    * Source location in "path:line:col" or "path:line" format.
    */
-  location: string;
+  location?: string;
 
   /**
    * Line range (e.g. "10" or "10-15").
@@ -75,6 +75,8 @@ export interface Finding {
 
   /** Security category label (e.g. "Security", "Performance") */
   category?: string;
+  /** Monorepo workspace this finding belongs to (if applicable) */
+  workspace?: string;
 
   /** CVSS score (0.0–10.0) */
   cvssScore?: number;
@@ -87,4 +89,24 @@ export interface Finding {
 
   /** Related references (URLs) */
   references?: string[];
+
+  // ── Developer guidance ───────────────────────────────────────────────────
+
+  /** Unique finding instance ID (engine may assign; plugins may hint) */
+  id?: string;
+
+  /** Estimated developer time to fix (e.g. "10min", "2h") */
+  estimatedFixTime?: string;
+
+  /** Whether applying the fix breaks backward compatibility */
+  backwardsCompatible?: boolean;
+
+  /** Human-readable migration guidance */
+  migrationNote?: string;
+
+  /** Associated test file path, if this finding has a test */
+  testFile?: string | null;
+
+  /** Versions where this issue was patched (for dependency findings) */
+  patchedVersions?: string | string[];
 }
