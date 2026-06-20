@@ -43,6 +43,39 @@ describe("Types", () => {
       expect(metadata.license).toBe("MIT");
       expect(metadata.keywords).toHaveLength(2);
     });
+
+    it("should support B3 manifest fields", () => {
+      const metadata: PluginMetadata = {
+        id: "my-plugin",
+        name: "My Plugin",
+        version: "1.0.0",
+        author: "Jane Dev",
+        description: "Detects issues",
+        sdkVersion: "0.2.0",
+        engineCompatibility: ">=1.0.0 <2.0.0",
+        capabilities: ["filesystem", "ast"],
+        dependencies: ["@sancus/plugin-base"],
+      };
+
+      expect(metadata.sdkVersion).toBe("0.2.0");
+      expect(metadata.engineCompatibility).toBe(">=1.0.0 <2.0.0");
+      expect(metadata.capabilities).toEqual(["filesystem", "ast"]);
+      expect(metadata.dependencies).toEqual(["@sancus/plugin-base"]);
+    });
+
+    it("should be valid with only required fields", () => {
+      const metadata: PluginMetadata = {
+        id: "minimal-plugin",
+        name: "Minimal Plugin",
+        version: "0.1.0",
+        author: "Dev",
+        description: "Minimal",
+      };
+
+      expect(metadata.id).toBe("minimal-plugin");
+      expect(metadata.sdkVersion).toBeUndefined();
+      expect(metadata.capabilities).toBeUndefined();
+    });
   });
 
   describe("Finding", () => {

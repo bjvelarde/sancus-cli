@@ -18,12 +18,14 @@ export interface Logger {
  * The engine may enforce path restrictions through this interface.
  */
 export interface FileSystemUtils {
-  /** Read a file as UTF-8 string */
+  /** Read a file as UTF-8 string (path relative to projectRoot) */
   readFile(path: string): Promise<string>;
-  /** Check whether a path exists */
-  exists(path: string): Promise<boolean>;
+  /** Check whether a path exists (relative to projectRoot) */
+  fileExists(path: string): Promise<boolean>;
+  /** Get the absolute project root path */
+  getProjectRoot(): string;
   /** List directory entries */
-  readDir(path: string): Promise<string[]>;
+  readDir?(path: string): Promise<string[]>;
   /** Join path segments (platform-aware) */
-  joinPath(...segments: string[]): string;
+  joinPath?(...segments: string[]): string;
 }
