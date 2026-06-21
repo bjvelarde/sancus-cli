@@ -97,5 +97,104 @@
       "sdkVersion": "^1.0.0",
       "dependencies": []
     }
+  },
+  "ruby-security-pack": {
+    "id": "ruby-security-pack",
+    "name": "@sancus/sample-ruby-security-pack",
+    "version": "1.0.0",
+    "description": "Sample Sancus language pack: SQL injection and insecure deserialization detection for Ruby/Rails codebases",
+    "author": "Sancus Team",
+    "repository": "https://github.com/sancus-security/sancus-cli/tree/main/samples/ruby-security-pack",
+    "license": "MIT",
+    "keywords": ["ruby", "rails", "sql-injection", "deserialization", "language-pack"],
+    "category": "language",
+    "tags": ["ruby", "rails", "security", "sql-injection"],
+    "npmPackage": {
+      "name": "@sancus/sample-ruby-security-pack",
+      "minVersion": "1.0.0",
+      "url": "https://www.npmjs.com/package/@sancus/sample-ruby-security-pack"
+    },
+    "metadata": {
+      "verified": true,
+      "featured": false,
+      "downloads": 0,
+      "rating": 0,
+      "lastUpdated": "2026-06-21T00:00:00Z"
+    },
+    "documentation": {
+      "url": "https://github.com/sancus-security/sancus-cli/tree/main/samples/ruby-security-pack",
+      "readme": "https://raw.githubusercontent.com/sancus-security/sancus-cli/main/samples/ruby-security-pack/README.md"
+    },
+    "requirements": {
+      "minNodeVersion": "18.0.0",
+      "sdkVersion": "^1.0.0",
+      "dependencies": []
+    }
+  },
+  "express-security-pack": {
+    "id": "express-security-pack",
+    "name": "@sancus/sample-express-security-pack",
+    "version": "1.0.0",
+    "description": "Sample Sancus framework pack: open redirect, SSTI, eval RCE, command injection, and misconfiguration detection for Express.js applications",
+    "author": "Sancus Team",
+    "repository": "https://github.com/sancus-security/sancus-cli/tree/main/samples/express-security-pack",
+    "license": "MIT",
+    "keywords": ["express", "nodejs", "security", "framework-pack"],
+    "category": "framework",
+    "tags": ["express", "nodejs", "security", "open-redirect"],
+    "npmPackage": {
+      "name": "@sancus/sample-express-security-pack",
+      "minVersion": "1.0.0",
+      "url": "https://www.npmjs.com/package/@sancus/sample-express-security-pack"
+    },
+    "metadata": {
+      "verified": true,
+      "featured": false,
+      "downloads": 0,
+      "rating": 0,
+      "lastUpdated": "2026-06-21T00:00:00Z"
+    },
+    "documentation": {
+      "url": "https://github.com/sancus-security/sancus-cli/tree/main/samples/express-security-pack",
+      "readme": "https://raw.githubusercontent.com/sancus-security/sancus-cli/main/samples/express-security-pack/README.md"
+    },
+    "requirements": {
+      "minNodeVersion": "18.0.0",
+      "sdkVersion": "^1.0.0",
+      "dependencies": []
+    }
+  },
+  "sarif-reporter": {
+    "id": "sarif-reporter",
+    "name": "@sancus/sample-sarif-reporter",
+    "version": "1.0.0",
+    "description": "Sample Sancus reporter extension: outputs scan findings as SARIF 2.1.0 for GitHub Code Scanning and compatible tools",
+    "author": "Sancus Team",
+    "repository": "https://github.com/sancus-security/sancus-cli/tree/main/samples/sarif-reporter",
+    "license": "MIT",
+    "keywords": ["sarif", "reporter", "github", "code-scanning"],
+    "category": "reporting",
+    "tags": ["sarif", "github-actions", "reporting"],
+    "npmPackage": {
+      "name": "@sancus/sample-sarif-reporter",
+      "minVersion": "1.0.0",
+      "url": "https://www.npmjs.com/package/@sancus/sample-sarif-reporter"
+    },
+    "metadata": {
+      "verified": true,
+      "featured": false,
+      "downloads": 0,
+      "rating": 0,
+      "lastUpdated": "2026-06-21T00:00:00Z"
+    },
+    "documentation": {
+      "url": "https://github.com/sancus-security/sancus-cli/tree/main/samples/sarif-reporter",
+      "readme": "https://raw.githubusercontent.com/sancus-security/sancus-cli/main/samples/sarif-reporter/README.md"
+    },
+    "requirements": {
+      "minNodeVersion": "18.0.0",
+      "sdkVersion": "^1.0.0",
+      "dependencies": []
+    }
   }
 }

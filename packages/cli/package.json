@@ -1,0 +1,26 @@
+{
+  "name": "@sancus/cli",
+  "version": "1.0.0",
+  "description": "Sancus CLI — plugin management and scanning",
+  "type": "module",
+  "bin": {
+    "sancus": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["sancus", "cli", "security", "plugins"],
+  "author": "Sancus Team",
+  "license": "MIT",
+  "dependencies": {
+    "@sancus/marketplace": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
