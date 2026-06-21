@@ -34,3 +34,14 @@ export {
 
 export { StaticRegistryProvider } from "./providers/static-registry.js";
 export { HttpRegistryProvider } from "./providers/http-registry.js";
+
+export {
+  checkPackageIntegrity,
+  validateIntegrityFields,
+  type IntegrityCheckResult,
+} from "./integrity.js";
+
+export {
+  calculateSha256,
+  verifySha256,
+} from "./security/verify-integrity.js";

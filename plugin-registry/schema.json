@@ -182,6 +182,16 @@
             }
           }
         }
+      },
+      "sha256": {
+        "type": "string",
+        "description": "SHA-256 hex digest of the installed package directory (64 lowercase hex chars). Optional — used for directory-level integrity verification when npmIntegrity is unavailable.",
+        "pattern": "^[a-f0-9]{64}$"
+      },
+      "npmIntegrity": {
+        "type": "string",
+        "description": "npm Subresource Integrity string (e.g. \"sha512-<base64>\"). Matches the _integrity field written by npm at install time. Preferred over sha256 for tarball-level verification.",
+        "pattern": "^sha\\d+-[A-Za-z0-9+/]+=*$"
       }
     }
   }

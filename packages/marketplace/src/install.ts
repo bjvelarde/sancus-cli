@@ -1,5 +1,6 @@
 import { getRegistryClient } from "./registry-client.js";
 import { getManifestManager } from "./manifest-manager.js";
+import { checkPackageIntegrity } from "./integrity.js";
 import { execSync } from "child_process";
 import * as path from "path";
 import * as fs from "fs/promises";
@@ -65,7 +66,18 @@ export async function installPlugin(
       throw new Error(`Plugin package not found after installation`);
     }
 
-    // Step 5: Register in manifest
+    // Step 5: Verify package integrity (no-op when registry entry has no integrity fields)
+    const integrityResult = await checkPackageIntegrity(pluginEntry, pluginDir);
+    if (!integrityResult.passed) {
+      throw new Error(
+        `Package integrity check failed (method: ${integrityResult.method}):\n${integrityResult.error}`,
+      );
+    }
+    if (integrityResult.checked) {
+      console.log(`   ✓ Integrity verified (${integrityResult.method})`);
+    }
+
+    // Step 6: Register in manifest
     await manifest.install(pluginId, targetVersion, "npm", npmPackage);
 
     console.log(`✅ Plugin installed successfully`);

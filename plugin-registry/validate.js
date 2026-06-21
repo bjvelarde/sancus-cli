@@ -26,6 +26,12 @@ const SEMVER_RE = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\
 // Plugin id: lowercase alphanumerics and hyphens only, 3-50 chars
 const ID_RE = /^[a-z0-9-]+$/;
 
+// sha256: exactly 64 lowercase hex characters
+const SHA256_HEX_RE = /^[a-f0-9]{64}$/;
+
+// SRI (Subresource Integrity): sha<N>-<base64>
+const SRI_RE = /^sha\d+-[A-Za-z0-9+/]+=*$/;
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 /**
@@ -98,6 +104,20 @@ function validateEntry(key, entry) {
   for (const { field, value } of urls) {
     if (typeof value !== 'string' || !value.startsWith('https://')) {
       errors.push(`${field} must start with "https://" (got: "${value}")`);
+    }
+  }
+
+  // 9. sha256 must be 64 lowercase hex chars if present
+  if (entry.sha256 !== undefined) {
+    if (typeof entry.sha256 !== 'string' || !SHA256_HEX_RE.test(entry.sha256)) {
+      errors.push(`sha256 must be a 64-character lowercase hex string (got: "${entry.sha256}")`);
+    }
+  }
+
+  // 10. npmIntegrity must be a valid SRI string if present
+  if (entry.npmIntegrity !== undefined) {
+    if (typeof entry.npmIntegrity !== 'string' || !SRI_RE.test(entry.npmIntegrity)) {
+      errors.push(`npmIntegrity must be a valid SRI string (e.g. "sha512-<base64>") (got: "${entry.npmIntegrity}")`);
     }
   }
 
