@@ -1,0 +1,33 @@
+{
+  "name": "@your-org/sancus-plugin-your-language",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "TODO: Sancus language pack for <YourLanguage>",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "vitest --run --configLoader runner",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "sancus",
+    "plugin",
+    "language-pack"
+  ],
+  "author": "TODO",
+  "license": "MIT",
+  "peerDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
+  }
+}

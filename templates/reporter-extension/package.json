@@ -1,0 +1,33 @@
+{
+  "name": "@your-org/sancus-reporter-your-format",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "TODO: Custom Sancus reporter that outputs findings as <YourFormat>",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "vitest --run --configLoader runner",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "sancus",
+    "plugin",
+    "reporter"
+  ],
+  "author": "TODO",
+  "license": "MIT",
+  "peerDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
+  }
+}
