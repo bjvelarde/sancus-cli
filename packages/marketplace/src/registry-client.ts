@@ -44,6 +44,16 @@ export interface PluginRegistryEntry {
     sdkVersion?: string;
     dependencies?: string[];
   };
+  /**
+   * Optional integrity verification.
+   * Existing registries remain compatible because these are optional.
+   */
+  sha256?: string;
+
+  /**
+   * npm Subresource Integrity (preferred over sha256 when available).
+   */
+  npmIntegrity?: string;
 }
 
 /**
