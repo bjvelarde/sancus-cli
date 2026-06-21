@@ -1,0 +1,27 @@
+{
+  "name": "@sancus/sample-sarif-reporter",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sample Sancus reporter: outputs findings as SARIF 2.1.0 (GitHub Code Scanning compatible)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "vitest --run --configLoader runner",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["sancus", "reporter", "sarif", "github", "security"],
+  "author": "Sancus Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@sancus/plugin-sdk": "^1.0.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
+  }
+}

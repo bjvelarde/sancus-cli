@@ -44,6 +44,18 @@ export interface PluginMetadata {
   /** Search keywords for marketplace discoverability */
   keywords?: string[];
 
+  /** Marketplace taxonomy tags (broader than keywords) */
+  tags?: string[];
+
+  /** Plugin documentation or landing page URL */
+  homepage?: string;
+
+  /** Engine/SDK version constraints */
+  engines?: {
+    /** Semver range for @sancus/plugin-sdk (e.g. ">=1.0.0") */
+    sdk?: string;
+  };
+
   /** Hint for how severe findings from this plugin tend to be */
   severityHint?: "critical" | "high" | "medium" | "low" | "info";
 
