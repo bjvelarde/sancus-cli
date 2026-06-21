@@ -235,6 +235,7 @@ async function cmdUninstall(args: string[]): Promise<void> {
 }
 
 async function cmdUpdate(args: string[]): Promise<void> {
+  const apply = extractBoolFlag(args, '--apply');
   const id = args[0];
 
   if (id) {
@@ -244,8 +245,36 @@ async function cmdUpdate(args: string[]): Promise<void> {
   }
 
   try {
-    await checkUpdates(id);
-    console.log('Done.');
+    const outdated = await checkUpdates(id);
+    const ids = Object.keys(outdated);
+
+    if (ids.length === 0 || !apply) {
+      // Check-only mode: checkUpdates already printed the summary.
+      if (ids.length > 0 && !apply) {
+        console.log(`\n${ids.length} update${ids.length === 1 ? '' : 's'} available. Re-run with --apply to upgrade all.`);
+      }
+      return;
+    }
+
+    // --apply: upgrade each outdated plugin in sequence
+    console.log(`\nApplying ${ids.length} update${ids.length === 1 ? '' : 's'}...\n`);
+    let succeeded = 0;
+    let failed = 0;
+    for (const pluginId of ids) {
+      const { latest } = outdated[pluginId];
+      console.log(`Upgrading ${pluginId} to ${latest}...`);
+      try {
+        await upgradePlugin(pluginId, latest);
+        succeeded++;
+      } catch (err) {
+        console.error(`  Failed: ${err instanceof Error ? err.message : String(err)}`);
+        failed++;
+      }
+    }
+
+    console.log('');
+    console.log(`Update complete: ${succeeded} upgraded, ${failed} failed.`);
+    if (failed > 0) process.exit(1);
   } catch (err) {
     console.error(`Error: ${err instanceof Error ? err.message : String(err)}`);
     process.exit(1);
@@ -272,37 +301,12 @@ async function cmdUpgrade(args: string[]): Promise<void> {
   }
 }
 
+/**
+ * `sancus plugin outdated` — alias for `sancus plugin update` (check-only).
+ * Delegates to cmdUpdate without --apply so the update path stays unified.
+ */
 async function cmdOutdated(_args: string[]): Promise<void> {
-  const manifest = getManifestManager();
-  const installed = await manifest.getInstalled();
-
-  if (installed.length === 0) {
-    console.log('No plugins installed.');
-    return;
-  }
-
-  // Build { id: version } map for all installed plugins
-  const installedMap: Record<string, string> = {};
-  for (const p of installed) {
-    installedMap[p.id] = p.version;
-  }
-
-  const registry = new RegistryClient();
-  const outdated = await registry.checkUpdates(installedMap);
-
-  if (!outdated || Object.keys(outdated).length === 0) {
-    console.log('All installed plugins are up to date.');
-    return;
-  }
-
-  console.log('');
-  console.log('Outdated plugins:');
-  console.log('');
-  for (const [id, update] of Object.entries(outdated)) {
-    console.log(`  ${id}  ${update.current} \u2192 ${update.latest}`);
-  }
-  console.log('');
-  console.log(`Run \`sancus plugin upgrade <id>\` to upgrade a plugin.`);
+  await cmdUpdate([]);
 }
 
 async function cmdEnable(args: string[]): Promise<void> {
@@ -358,9 +362,9 @@ function printHelp(): void {
   console.log('  info <id>                    Show full details for a plugin');
   console.log('  install <id> [--version v]   Install a plugin (optionally pin a version)');
   console.log('  uninstall <id> [--force]     Remove an installed plugin');
-  console.log('  update [id]                  Check for updates (all plugins if id omitted)');
+  console.log('  update [id] [--apply]        Check for updates; --apply upgrades all outdated');
   console.log('  upgrade <id> [--version v]   Upgrade a plugin to latest (or specific version)');
-  console.log('  outdated                     List installed plugins with available updates');
+  console.log('  outdated                     Alias for: sancus plugin update (check-only)');
   console.log('  enable <id>                  Enable a disabled plugin');
   console.log('  disable <id>                 Disable an installed plugin');
   console.log('');

@@ -144,18 +144,28 @@ export async function uninstallPlugin(
 }
 
 /**
- * Check for updates to installed plugins
+ * Check for updates to installed plugins.
+ *
+ * Returns a structured map of outdated plugins so callers can act on results.
+ * Also prints a human-readable summary to stdout.
+ *
+ * @param pluginId  Optional — check a single plugin; omit to check all.
+ * @returns         Record mapping plugin id to { current, latest } for every
+ *                  plugin that has an available update.
  */
-export async function checkUpdates(pluginId?: string): Promise<void> {
+export async function checkUpdates(
+  pluginId?: string,
+): Promise<Record<string, { current: string; latest: string }>> {
   const registry = getRegistryClient();
   const manifest = getManifestManager();
+  const outdated: Record<string, { current: string; latest: string }> = {};
 
   try {
     const installed = await manifest.getInstalled();
 
     if (installed.length === 0) {
       console.log("📭 No plugins installed");
-      return;
+      return outdated;
     }
 
     const toCheck = pluginId
@@ -164,12 +174,11 @@ export async function checkUpdates(pluginId?: string): Promise<void> {
 
     if (toCheck.length === 0) {
       console.log(`⚠️  Plugin "${pluginId}" not found`);
-      return;
+      return outdated;
     }
 
     console.log("🔍 Checking for updates...\n");
 
-    let hasUpdates = false;
     for (const plugin of toCheck) {
       const registryEntry = await registry.getPlugin(plugin.id);
       if (!registryEntry) {
@@ -178,7 +187,10 @@ export async function checkUpdates(pluginId?: string): Promise<void> {
       }
 
       if (registryEntry.version !== plugin.version) {
-        hasUpdates = true;
+        outdated[plugin.id] = {
+          current: plugin.version,
+          latest: registryEntry.version,
+        };
         console.log(
           `📦 ${plugin.id}: ${plugin.version} → ${registryEntry.version} available`,
         );
@@ -187,11 +199,13 @@ export async function checkUpdates(pluginId?: string): Promise<void> {
       }
     }
 
-    if (hasUpdates) {
+    if (Object.keys(outdated).length > 0) {
       console.log(
-        "\n💡 Tip: Run 'sancus plugin install <id> --version <version>' to upgrade",
+        "\n💡 Tip: Run 'sancus plugin upgrade <id>' or 'sancus plugin update --apply' to upgrade",
       );
     }
+
+    return outdated;
   } catch (error: any) {
     console.error(`❌ Update check failed: ${error.message}`);
     throw error;
@@ -282,7 +296,30 @@ export async function upgradePlugin(
       throw new Error(`Plugin package not found after upgrade`);
     }
 
-    // Step 8: Update manifest
+    // Step 8: Verify package integrity (no-op when registry entry has no integrity fields)
+    const integrityResult = await checkPackageIntegrity(pluginEntry, pluginDir);
+    if (!integrityResult.passed) {
+      // Integrity failed — rollback to previous version before throwing
+      console.error(`❌ Integrity check failed after upgrade, rolling back...`);
+      try {
+        const rollbackSpec = `${npmPackage}@${backupVersion}`;
+        execSync(`npm install ${rollbackSpec} --prefix "${pluginDir}" --save`, {
+          stdio: "inherit",
+          cwd: pluginDir,
+        });
+        console.log(`✅ Rolled back to version ${backupVersion}`);
+      } catch (rollbackError) {
+        console.error(`⚠️  Rollback failed: ${rollbackError}`);
+      }
+      throw new Error(
+        `Package integrity check failed (method: ${integrityResult.method}):\n${integrityResult.error}`,
+      );
+    }
+    if (integrityResult.checked) {
+      console.log(`   ✓ Integrity verified (${integrityResult.method})`);
+    }
+
+    // Step 9: Update manifest
     await manifest.updateVersion(pluginId, newVersion);
 
     console.log(`✅ Plugin upgraded successfully`);
