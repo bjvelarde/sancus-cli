@@ -1,6 +1,3 @@
-#### `plugin-api/PLUGIN_SPEC.md`
-
-````markdown
 # Sancus Plugin API Specification
 
 **Sancus plugins** extend the security scanner with custom detectors for your framework or application-specific patterns.
@@ -14,7 +11,6 @@ Install the plugin SDK:
 ```bash
 npm install --save-dev @sancus/plugin-sdk
 ```
-````
 
 Create a TypeScript plugin:
 
@@ -111,35 +107,71 @@ Required metadata for plugin identification:
 
 ```typescript
 interface PluginMetadata {
-  id: string; // Unique identifier (lowercase, hyphens)
-  name: string; // Human-readable display name
-  version: string; // Semantic versioning (e.g., "1.0.0")
-  author: string; // Author or maintainer
-  description: string; // What does this plugin detect?
-  repository?: string; // Optional: repository URL
-  license?: string; // Optional: license type
-  keywords?: string[]; // Optional: searchable keywords
+  id: string;              // Unique identifier (lowercase, hyphens)
+  name: string;            // Human-readable display name
+  version: string;         // Semantic versioning (e.g., "1.0.0")
+  author: string;          // Author or maintainer
+  description: string;     // What does this plugin detect?
+  repository?: string;     // Optional: repository URL
+  homepage?: string;       // Optional: documentation or landing page URL
+  license?: string;        // Optional: license type (e.g., "MIT")
+  keywords?: string[];     // Optional: searchable keywords
+  tags?: string[];         // Optional: marketplace taxonomy tags
+  engines?: {              // Optional: SDK version constraint
+    sdk: string;           // e.g., ">=1.0.0"
+  };
+  capabilities?: string[]; // Optional: declared engine capabilities required
+                           // e.g., ["filesystem", "ast"]
 }
 ```
 
 ## Finding Interface
 
-A security finding detected by your plugin:
+A security finding returned by your plugin:
 
 ```typescript
 interface Finding {
-  type: string; // Unique identifier
-  severity: Severity; // 'critical' | 'high' | 'medium' | 'low' | 'info'
-  location: string; // "path/file.ts:123"
-  lineRange: string; // "123" or "123-125"
-  codeSnippet: string; // The problematic code
-  confidence: Confidence; // 'high' | 'medium' | 'low'
-  message: string; // User-friendly description
-  recommendation: string; // How to fix it
-  category?: string; // e.g., "Security", "Best Practice"
-  cvssScore?: number; // CVSS v3.1 score (0-10)
+  // Identity
+  ruleId?: string;         // Machine-readable rule identifier (e.g., "NO_EVAL")
+  type?: string;           // Finding type / category slug
+  title?: string;          // Short human-readable title
+
+  // Message
+  message: string;         // Required: user-friendly description of the issue
+
+  // Detail
+  description?: string;    // Extended explanation of the vulnerability
+  recommendation?: string; // How to fix it
+
+  // Classification
+  severity: Severity;      // Required: 'critical' | 'high' | 'medium' | 'low' | 'info'
+  confidence?: Confidence; // 'high' | 'medium' | 'low'
+  category?: string;       // e.g., "injection", "misconfiguration"
+
+  // Location
+  location?: string;       // "path/file.ts:123"
+  lineRange?: string;      // "123" or "123-125"
+  codeSnippet?: string;    // The problematic code
+
+  // References
+  cve?: string;            // CVE identifier (e.g., "CVE-2021-44228")
+  references?: string[];   // Links to advisories, CWE entries, docs
+
+  // Extension
   metadata?: Record<string, unknown>; // Plugin-specific data
 }
+```
+
+### Severity Values
+
+```typescript
+type Severity = 'critical' | 'high' | 'medium' | 'low' | 'info';
+```
+
+### Confidence Values
+
+```typescript
+type Confidence = 'high' | 'medium' | 'low';
 ```
 
 ## PluginContext Interface
@@ -148,9 +180,9 @@ Context passed to all plugin methods:
 
 ```typescript
 interface PluginContext {
-  logger: Logger; // Structured logging
-  fs: FileSystemUtils; // Safe file system access
-  config: PluginConfig; // Plugin configuration
+  logger: Logger;          // Structured logging
+  fs: FileSystemUtils;     // Safe file system access
+  config: PluginConfig;    // Plugin configuration
 }
 ```
 
@@ -249,9 +281,14 @@ If you have plugins written for the old API, update them:
 | `name: 'id'`            | `metadata: { id, name, ... }`              |
 | `detect(file, context)` | `detect(file, context)` ✓ (same signature) |
 | `initialize(context)`   | `initialize(context)` ✓ (same signature)   |
+| `cvssScore`             | removed — use `references[]` for CVE links |
 | –                       | `postScan(findings, context)` (new hook)   |
+| –                       | `ruleId`, `title`, `description` (new fields) |
+
+See [Migration Guide](../docs/migration-guide.md) for a full walkthrough.
 
 ## Reference
 
 - **@sancus/plugin-sdk** - [Full API documentation](../packages/plugin-sdk/README.md)
+- **Developer Docs** - [docs/](../docs/) — Architecture, API Reference, Extension Guide, Migration Guide
 - **Examples** - [Working code samples](../examples/)
